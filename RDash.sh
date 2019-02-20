@@ -1,14 +1,15 @@
 #!/bin/bash
-softwareVersion=$(git describe --long)
+softwareVersion=1.0 # $(git describe --long)
 check_splash=`sudo grep disable_splash= /boot/config.txt | cut -d "=" -f 2`
 check_camera=`sudo grep start_x= /boot/config.txt | cut -d "=" -f 2`
 check_memory=`sudo grep gpu_mem= /boot/config.txt | cut -d "=" -f 2`
 check_splash=`sudo grep ^disable_splash= /boot/config.txt | cut -d "=" -f 2`
 
+
 RDash="/opt/RDash/"
 
 
-echo -e "\e[1;4;246mRDash Setup $softwareVersion\e[0m"
+echo -e "\e[1;4;246mRDash Setup v.$softwareVersion\e[0m\n"
 
 #Instalacja Wywietlacza
 #wget http://www.waveshare.com/w/upload/0/00/LCD-show-170703.tar.gz
@@ -36,31 +37,39 @@ echo -e "\e[1;4;93mStep 1. Updating system\e[0m"
 ###########################################
 # Install pre-built dependencies from Apt #
 ###########################################
-#echo -e "\e[1;4;93mStep 2. Install pre-built dependencies from Apt\e[0m"
-#sudo apt install -y dnsmasq hostapd libbluetooth-dev apache2 php7.0 php7.0-mysql php7.0-bcmath mariadb-server libmariadbclient-dev libmariadbclient-dev-compat uvcdynctrl
+echo -e "\e[1;4;93mStep 2. Install pre-built dependencies from Apt\e[0m"
+#sudo apt install -y omxplayer ttf-freefont git dnsmasq hostapd libbluetooth-dev apache2 php7.0 php7.0-mysql php7.0-bcmath mariadb-server libmariadbclient-dev libmariadbclient-dev-compat uvcdynctrl
+#gpsd gpsd-clients
 #sudo systemctl disable hostapd dnsmasq
+
+
+echo -e "\e[1;4;93mStep 3. Installing wiringPI\e[0m"
+# Install wiringPI
+#git clone git://git.drogon.net/wiringPi
+#cd wiringPi
+#git pull origin
+#./build
+#cd ../
 
 
 ####################################################
 # Install pre-built dependencies from Apt  for Dev #
 ####################################################
-#apt-get install realvnc-vnc-server realvnc-vnc-viewer
 
-echo -e "\e[1;4;93mStep 2. Preparing asplashscreen\e[0m"
-
+echo -e "\e[1;4;93mStep 4. Coping files\e[0m"
 cp -R source/* /
 
-#apt-get install git -y
-#mkdir -p ${RDash}/startup
-#cp loading_video.mp4 ${RDash}/startup/loading_video.mp4
-#apt-get install -y avconv -y 
-#apt-get install -y omxplayer -y
-#cp asplashscreen /etc/init.d/asplashscreen
-#chmod +x /etc/init.d/asplashscreen
-#apt-get install insserv
-#sudo insserv /etc/init.d/splashscreen 
+####################################################
+# Install pre-built dependencies from Apt  for Dev #
+####################################################
 
+echo -e "\e[1;4;93mStep 5. Enabling services\e[0m"
+
+#apt-get install -y avconv -y 
+echo -e "Splashscreen"
 sudo systemctl enable splashscreen
+
+
 
 if [ "$check_splash" != "0" ]
 then
@@ -79,23 +88,22 @@ then
     sleep 1
 fi
 
-if [ -e /etc/init.d/splashscreen ]
-then
-    clear
-    echo "---------------------------------------------------------"
-    echo "Installing service splashscreen"
-    echo "---------------------------------------------------------"
-    #sudo update-rc.d asplashscreen defaults >/dev/null 2>&1
-    #sudo update-rc.d asplashscreen enable >/dev/null 2>&1
-    echo "------"
-    echo "Finish"
-    echo "------"
-    sleep 1
-fi
+#if [ -e /etc/init.d/splashscreen ]
+#then
+#    clear
+#    echo "---------------------------------------------------------"
+#    echo "Installing service splashscreen"
+#    echo "---------------------------------------------------------"
+#    #sudo update-rc.d asplashscreen defaults >/dev/null 2>&1
+#    #sudo update-rc.d asplashscreen enable >/dev/null 2>&1
+#    echo "------"
+#    echo "Finish"
+#    echo "------"
+#    sleep 1
+#fi
 
 if [ "$check_camera" != "1" ]
 then
-    clear
     echo "---------------------------------------------------------"
     echo "Enabling RaspberryPi-Camera"
     echo "---------------------------------------------------------"
@@ -111,19 +119,42 @@ then
     sleep 1
 fi
 
-clear
-echo "---------------------------------------------------------"
-echo "Cleanup system..."
-echo "---------------------------------------------------------"
+
+####################################################
+# Install pre-built dependencies from Apt  for Dev #
+####################################################
+
+echo -e "\e[1;4;93mStep 5. Cleaning system\e[0m"
 #sudo apt-get --force-yes -q -f -y remove --purge minecraft-pi scratch wolfram-engine debian-reference-* epiphany-browser* sonic-pi supercollider* >/dev/null 2>&1
 #sudo apt-get --force-yes -q -f -y clean >/dev/null 2>&1
 #sudo apt-get --force-yes -q -f -y autoremove --purge >/dev/null 2>&1
 #sudo rm -r /home/pi/python_games/ >/dev/null 2>&1
 #sudo rm -f /home/pi/Desktop/debian-reference-common.desktop /home/pi/Desktop/epiphany-browser.desktop /home/pi/Desktop/minecraft-pi.desktop /home/pi/Desktop/pistore.desktop /home/pi/Desktop/python-games.desktop /home/pi/Desktop/scratch.desktop /home/pi/Desktop/sonic-pi.desktop /home/pi/Desktop/wolfram-language.desktop /home/pi/Desktop/wolfram-mathematica.desktop >/dev/null 2>&1
-echo "------"
-echo "Finish"
-echo "------"
-sleep 1
+#sudo apt-get --yes --force-yes remove --purge minecraft-pi 
+#sudo apt-get --yes --force-yes remove --purge scratch
+#sudo apt-get --yes --force-yes remove --purge wolfram-engine
+#sudo apt-get --yes --force-yes remove --purge debian-reference-*
+#sudo apt-get --yes --force-yes remove --purge epiphany-browser*
+#sudo apt-get --yes --force-yes remove --purge sonic-pi 
+#sudo apt-get --yes --force-yes remove --purge supercollider*
+#sudo apt-get --yes --force-yes clean
+#rm -r /home/pi/python_games/
+#sudo rm -f /home/pi/Desktop/debian-reference-common.desktop
+#sudo rm -f /home/pi/Desktop/epiphany-browser.desktop
+#sudo rm -f /home/pi/Desktop/minecraft-pi.desktop
+#sudo rm -f /home/pi/Desktop/pistore.desktop
+#sudo rm -f /home/pi/Desktop/python-games.desktop
+#sudo rm -f /home/pi/Desktop/scratch.desktop
+#sudo rm -f /home/pi/Desktop/sonic-pi.desktop
+#sudo rm -f /home/pi/Desktop/wolfram-language.desktop
+#sudo rm -f rm -f /home/pi/Desktop/wolfram-mathematica.desktop
+
+
+####################################################
+# Install pre-built dependencies from Apt  for Dev #
+####################################################
+
+echo -e "\e[1;4;93mStep 6. Finish\e[0m"
 
 #konfiguracja sieci
 #apt-get install wicd-cursesloading_video.mp4
