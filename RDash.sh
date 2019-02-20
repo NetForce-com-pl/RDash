@@ -3,10 +3,23 @@ softwareVersion=1.0 # $(git describe --long)
 check_splash=`sudo grep disable_splash= /boot/config.txt | cut -d "=" -f 2`
 check_camera=`sudo grep start_x= /boot/config.txt | cut -d "=" -f 2`
 check_memory=`sudo grep gpu_mem= /boot/config.txt | cut -d "=" -f 2`
-check_splash=`sudo grep ^disable_splash= /boot/config.txt | cut -d "=" -f 2`
+#check_splash=`sudo grep ^disable_splash= /boot/config.txt | cut -d "=" -f 2`
 
 
+
+SKIP_UNPACK=${SKIP_UNPACK:-0}
+
+
+
+
+#Config section
 RDash="/opt/RDash/"
+IP=""
+FROM=""
+FROM_SU=""
+TO="/"
+
+UPDATE_DIR="source"
 
 
 echo -e "\e[1;4;246mRDash Setup v.$softwareVersion\e[0m\n"
@@ -56,8 +69,18 @@ echo -e "\e[1;4;93mStep 3. Installing wiringPI\e[0m"
 # Install pre-built dependencies from Apt  for Dev #
 ####################################################
 
-echo -e "\e[1;4;93mStep 4. Coping files\e[0m"
-cp -R source/* /
+echo -e "\e[1;4;93mStep 4. Unpaking and coping files\e[0m"
+#cp -R source/* /
+if [ 1 == 1 ];then
+    if [ $SKIP_UNPACK -eq 0 ];then
+	echo -e "\e[1;32mUnpacking archive\e[0m"
+	#tar -zxf ${PWD}/$UPDATE_DIR.tar.gz -C /
+	#rm -rf ${PWD}/$UPDATE_DIR.tar.gz
+    fi
+fi
+
+
+
 
 ####################################################
 # Install pre-built dependencies from Apt  for Dev #
@@ -71,7 +94,7 @@ sudo systemctl enable splashscreen
 
 
 
-if [ "$check_splash" != "0" ]
+if [ "$check_splash" != "1" ]
 then
     echo "---------------------------------------------------------"
     echo "\e[1;4;93mStep3. Disable splashscreen config.txt"
@@ -80,27 +103,13 @@ then
     if [ "$check_splash" != "0" ] && [ "$check_splash" != "1" ]
     then
         sudo -u root bash -c "sed -i '/disable_splash=/d' /boot/config.txt"
-        sudo -u root bash -c 'echo "disable_splash=0" >> /boot/config.txt'
+        sudo -u root bash -c 'echo "disable_splash=1" >> /boot/config.txt'
     fi
     echo "------"
     echo "Finish"
     echo "------"
     sleep 1
 fi
-
-#if [ -e /etc/init.d/splashscreen ]
-#then
-#    clear
-#    echo "---------------------------------------------------------"
-#    echo "Installing service splashscreen"
-#    echo "---------------------------------------------------------"
-#    #sudo update-rc.d asplashscreen defaults >/dev/null 2>&1
-#    #sudo update-rc.d asplashscreen enable >/dev/null 2>&1
-#    echo "------"
-#    echo "Finish"
-#    echo "------"
-#    sleep 1
-#fi
 
 if [ "$check_camera" != "1" ]
 then
