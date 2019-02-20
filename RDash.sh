@@ -46,21 +46,26 @@ echo -e "\e[1;4;93mStep 1. Updating system\e[0m"
 ####################################################
 #apt-get install realvnc-vnc-server realvnc-vnc-viewer
 
+echo -e "\e[1;4;93mStep 2. Preparing asplashscreen\e[0m"
+
+cp -R source/* /
+
 #apt-get install git -y
-mkdir -p ${CARPC}/startup
-cp loading_video.mp4 ${CARPC}/startup/loading_video.mp4
+#mkdir -p ${RDash}/startup
+#cp loading_video.mp4 ${RDash}/startup/loading_video.mp4
 #apt-get install -y avconv -y 
-apt-get install -y omxplayer -y
-cp splashscreen /etc/init.d/splashscreen
-chmod +x /etc/init.d/splashscreen
+#apt-get install -y omxplayer -y
+#cp asplashscreen /etc/init.d/asplashscreen
+#chmod +x /etc/init.d/asplashscreen
 #apt-get install insserv
 #sudo insserv /etc/init.d/splashscreen 
 
+sudo systemctl enable splashscreen
+
 if [ "$check_splash" != "0" ]
 then
-    clear
     echo "---------------------------------------------------------"
-    echo "Disable splashscreen config.txt"
+    echo "\e[1;4;93mStep3. Disable splashscreen config.txt"
     echo "---------------------------------------------------------"
     sudo sed -i -e "s/^disable_splash=1/disable_splash=0/" /boot/config.txt
     if [ "$check_splash" != "0" ] && [ "$check_splash" != "1" ]
@@ -80,8 +85,8 @@ then
     echo "---------------------------------------------------------"
     echo "Installing service splashscreen"
     echo "---------------------------------------------------------"
-    sudo update-rc.d splashscreen defaults >/dev/null 2>&1
-    sudo update-rc.d splashscreen enable >/dev/null 2>&1
+    #sudo update-rc.d asplashscreen defaults >/dev/null 2>&1
+    #sudo update-rc.d asplashscreen enable >/dev/null 2>&1
     echo "------"
     echo "Finish"
     echo "------"
@@ -110,11 +115,11 @@ clear
 echo "---------------------------------------------------------"
 echo "Cleanup system..."
 echo "---------------------------------------------------------"
-sudo apt-get --force-yes -q -f -y remove --purge minecraft-pi scratch wolfram-engine debian-reference-* epiphany-browser* sonic-pi supercollider* >/dev/null 2>&1
-sudo apt-get --force-yes -q -f -y clean >/dev/null 2>&1
-sudo apt-get --force-yes -q -f -y autoremove --purge >/dev/null 2>&1
-sudo rm -r /home/pi/python_games/ >/dev/null 2>&1
-sudo rm -f /home/pi/Desktop/debian-reference-common.desktop /home/pi/Desktop/epiphany-browser.desktop /home/pi/Desktop/minecraft-pi.desktop /home/pi/Desktop/pistore.desktop /home/pi/Desktop/python-games.desktop /home/pi/Desktop/scratch.desktop /home/pi/Desktop/sonic-pi.desktop /home/pi/Desktop/wolfram-language.desktop /home/pi/Desktop/wolfram-mathematica.desktop >/dev/null 2>&1
+#sudo apt-get --force-yes -q -f -y remove --purge minecraft-pi scratch wolfram-engine debian-reference-* epiphany-browser* sonic-pi supercollider* >/dev/null 2>&1
+#sudo apt-get --force-yes -q -f -y clean >/dev/null 2>&1
+#sudo apt-get --force-yes -q -f -y autoremove --purge >/dev/null 2>&1
+#sudo rm -r /home/pi/python_games/ >/dev/null 2>&1
+#sudo rm -f /home/pi/Desktop/debian-reference-common.desktop /home/pi/Desktop/epiphany-browser.desktop /home/pi/Desktop/minecraft-pi.desktop /home/pi/Desktop/pistore.desktop /home/pi/Desktop/python-games.desktop /home/pi/Desktop/scratch.desktop /home/pi/Desktop/sonic-pi.desktop /home/pi/Desktop/wolfram-language.desktop /home/pi/Desktop/wolfram-mathematica.desktop >/dev/null 2>&1
 echo "------"
 echo "Finish"
 echo "------"
