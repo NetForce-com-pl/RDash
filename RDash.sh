@@ -5,6 +5,8 @@ check_camera=`sudo grep start_x= /boot/config.txt | cut -d "=" -f 2`
 check_memory=`sudo grep gpu_mem= /boot/config.txt | cut -d "=" -f 2`
 check_splash=`sudo grep ^disable_splash= /boot/config.txt | cut -d "=" -f 2`
 
+RDash="/opt/RDash/"
+
 
 echo -e "\e[1;4;246mRDash Setup $softwareVersion\e[0m"
 
@@ -28,7 +30,7 @@ fi
 #################
 echo -e "\e[1;4;93mStep 1. Updating system\e[0m"
 #sudo apt update
-#Asudo apt upgrade -y
+#sudo apt upgrade -y
 
 
 ###########################################
@@ -45,8 +47,8 @@ echo -e "\e[1;4;93mStep 1. Updating system\e[0m"
 #apt-get install realvnc-vnc-server realvnc-vnc-viewer
 
 #apt-get install git -y
-mkdir -p /opt/RDash/startup
-cp loading_video.mp4 /opt/RDash/startup/loading_video.mp4
+mkdir -p ${CARPC}/startup
+cp loading_video.mp4 ${CARPC}/startup/loading_video.mp4
 #apt-get install -y avconv -y 
 apt-get install -y omxplayer -y
 cp splashscreen /etc/init.d/splashscreen
