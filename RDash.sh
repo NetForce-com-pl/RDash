@@ -99,7 +99,7 @@ then
     echo "---------------------------------------------------------"
     echo "\e[1;4;93mStep3. Disable splashscreen config.txt"
     echo "---------------------------------------------------------"
-    sudo sed -i -e "s/^disable_splash=1/disable_splash=0/" /boot/config.txt
+    sudo sed -i -e "s/^disable_splash=0/disable_splash=1/" /boot/config.txt
     if [ "$check_splash" != "0" ] && [ "$check_splash" != "1" ]
     then
         sudo -u root bash -c "sed -i '/disable_splash=/d' /boot/config.txt"
