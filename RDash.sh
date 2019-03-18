@@ -43,17 +43,17 @@ fi
 # Update System #
 #################
 echo -e "\e[1;4;93mStep 1. Updating system\e[0m"
-#sudo apt update
-#sudo apt upgrade -y
-
-
+sudo apt update
+sudo apt upgrade -y
+sudo apt dist-upgrade
+sudo modprobe bcm2835-v4l2
+echo "bcm2835-v4l2" >>/etc/modules
 ###########################################
 # Install pre-built dependencies from Apt #
 ###########################################
 echo -e "\e[1;4;93mStep 2. Install pre-built dependencies from Apt\e[0m"
-#sudo apt install -y omxplayer ttf-freefont git dnsmasq hostapd libbluetooth-dev apache2 php7.0 php7.0-mysql php7.0-bcmath mariadb-server libmariadbclient-dev libmariadbclient-dev-compat uvcdynctrl
-#gpsd gpsd-clients
-#sudo systemctl disable hostapd dnsmasq
+sudo apt install -y avconv omxplayer ttf-freefont git dnsmasq hostapd libbluetooth-dev apache2 php7.0 php7.0-mysql php7.0-bcmath mariadb-server libmariadbclient-dev libmariadbclient-dev-compat uvcdynctrl gpsd gpsd-clients
+sudo systemctl disable hostapd dnsmasq
 
 
 echo -e "\e[1;4;93mStep 3. Installing wiringPI\e[0m"
@@ -74,7 +74,7 @@ echo -e "\e[1;4;93mStep 4. Unpaking and coping files\e[0m"
 if [ 1 == 1 ];then
     if [ $SKIP_UNPACK -eq 0 ];then
 	echo -e "\e[1;32mUnpacking archive\e[0m"
-	#tar -zxf ${PWD}/$UPDATE_DIR.tar.gz -C /
+	tar -zxf ${PWD}/$UPDATE_DIR.tar.gz -C /
 	#rm -rf ${PWD}/$UPDATE_DIR.tar.gz
     fi
 fi
@@ -88,7 +88,6 @@ fi
 
 echo -e "\e[1;4;93mStep 5. Enabling services\e[0m"
 
-#apt-get install -y avconv -y 
 echo -e "Splashscreen"
 sudo systemctl enable splashscreen
 
@@ -134,29 +133,29 @@ fi
 ####################################################
 
 echo -e "\e[1;4;93mStep 5. Cleaning system\e[0m"
-#sudo apt-get --force-yes -q -f -y remove --purge minecraft-pi scratch wolfram-engine debian-reference-* epiphany-browser* sonic-pi supercollider* >/dev/null 2>&1
-#sudo apt-get --force-yes -q -f -y clean >/dev/null 2>&1
-#sudo apt-get --force-yes -q -f -y autoremove --purge >/dev/null 2>&1
-#sudo rm -r /home/pi/python_games/ >/dev/null 2>&1
-#sudo rm -f /home/pi/Desktop/debian-reference-common.desktop /home/pi/Desktop/epiphany-browser.desktop /home/pi/Desktop/minecraft-pi.desktop /home/pi/Desktop/pistore.desktop /home/pi/Desktop/python-games.desktop /home/pi/Desktop/scratch.desktop /home/pi/Desktop/sonic-pi.desktop /home/pi/Desktop/wolfram-language.desktop /home/pi/Desktop/wolfram-mathematica.desktop >/dev/null 2>&1
-#sudo apt-get --yes --force-yes remove --purge minecraft-pi 
-#sudo apt-get --yes --force-yes remove --purge scratch
-#sudo apt-get --yes --force-yes remove --purge wolfram-engine
-#sudo apt-get --yes --force-yes remove --purge debian-reference-*
-#sudo apt-get --yes --force-yes remove --purge epiphany-browser*
-#sudo apt-get --yes --force-yes remove --purge sonic-pi 
-#sudo apt-get --yes --force-yes remove --purge supercollider*
-#sudo apt-get --yes --force-yes clean
-#rm -r /home/pi/python_games/
-#sudo rm -f /home/pi/Desktop/debian-reference-common.desktop
-#sudo rm -f /home/pi/Desktop/epiphany-browser.desktop
-#sudo rm -f /home/pi/Desktop/minecraft-pi.desktop
-#sudo rm -f /home/pi/Desktop/pistore.desktop
-#sudo rm -f /home/pi/Desktop/python-games.desktop
-#sudo rm -f /home/pi/Desktop/scratch.desktop
-#sudo rm -f /home/pi/Desktop/sonic-pi.desktop
-#sudo rm -f /home/pi/Desktop/wolfram-language.desktop
-#sudo rm -f rm -f /home/pi/Desktop/wolfram-mathematica.desktop
+sudo apt-get --force-yes -q -f -y remove --purge minecraft-pi scratch wolfram-engine debian-reference-* epiphany-browser* sonic-pi supercollider* >/dev/null 2>&1
+sudo apt-get --force-yes -q -f -y clean >/dev/null 2>&1
+sudo apt-get --force-yes -q -f -y autoremove --purge >/dev/null 2>&1
+sudo rm -r /home/pi/python_games/ >/dev/null 2>&1
+sudo rm -f /home/pi/Desktop/debian-reference-common.desktop /home/pi/Desktop/epiphany-browser.desktop /home/pi/Desktop/minecraft-pi.desktop /home/pi/Desktop/pistore.desktop /home/pi/Desktop/python-games.desktop /home/pi/Desktop/scratch.desktop /home/pi/Desktop/sonic-pi.desktop /home/pi/Desktop/wolfram-language.desktop /home/pi/Desktop/wolfram-mathematica.desktop >/dev/null 2>&1
+sudo apt-get --yes --force-yes remove --purge minecraft-pi 
+sudo apt-get --yes --force-yes remove --purge scratch
+sudo apt-get --yes --force-yes remove --purge wolfram-engine
+sudo apt-get --yes --force-yes remove --purge debian-reference-*
+sudo apt-get --yes --force-yes remove --purge epiphany-browser*
+sudo apt-get --yes --force-yes remove --purge sonic-pi 
+sudo apt-get --yes --force-yes remove --purge supercollider*
+sudo apt-get --yes --force-yes clean
+sudo rm -r /home/pi/python_games/
+sudo rm -f /home/pi/Desktop/debian-reference-common.desktop
+sudo rm -f /home/pi/Desktop/epiphany-browser.desktop
+sudo rm -f /home/pi/Desktop/minecraft-pi.desktop
+sudo rm -f /home/pi/Desktop/pistore.desktop
+sudo rm -f /home/pi/Desktop/python-games.desktop
+sudo rm -f /home/pi/Desktop/scratch.desktop
+sudo rm -f /home/pi/Desktop/sonic-pi.desktop
+sudo rm -f /home/pi/Desktop/wolfram-language.desktop
+sudo rm -f rm -f /home/pi/Desktop/wolfram-mathematica.desktop
 
 
 ####################################################
